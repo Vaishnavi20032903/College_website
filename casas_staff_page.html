@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet the distinguished faculty of CASAS Department - experienced educators and researchers in Computer Science, Data Science, and Applied Sciences.">
+    <title>CASAS Department - Faculty</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            padding-top: 80px;
+            background: #f8fafc;
+        }
+
+        .faculty-hero {
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .faculty-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .faculty-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .staff-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);            border-radius: 2px;
+        }
+
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .professors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .staff-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .staff-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+        }
+
+        .staff-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .leadership-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .leadership-card::before {
+            height: 6px;
+        }
+
+        .staff-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            border: 4px solid #667eea;
+            position: relative;
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+        }
+
+        .leadership-card .staff-image {
+            width: 180px;
+            height: 180px;
+            border: 5px solid #667eea;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .staff-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .staff-card:hover .staff-image img {
+            transform: scale(1.1);
+        }
+
+        .staff-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .leadership-card .staff-name {
+            font-size: 1.8rem;
+            color: #667eea;
+        }
+
+        .staff-designation {
+            font-size: 1rem;
+            color: #667eea;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .leadership-card .staff-designation {
+            font-size: 1.2rem;
+           background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .staff-bio {
+            color: #718096;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .staff-contact {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-btn {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.5rem;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+            margin: 4rem 0;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .faculty-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .leadership-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .professors-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .staff-card {
+                padding: 1.5rem;
+            }
+
+            .staff-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .leadership-card .staff-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .professors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faculty-hero {
+                padding: 2rem 0;
+            }
+        }
+
+        /* Animation */
+        .staff-card {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .staff-card:nth-child(1) { animation-delay: 0.1s; }
+        .staff-card:nth-child(2) { animation-delay: 0.2s; }
+        .staff-card:nth-child(3) { animation-delay: 0.3s; }
+        .staff-card:nth-child(4) { animation-delay: 0.4s; }
+        .staff-card:nth-child(5) { animation-delay: 0.5s; }
+        .staff-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+              <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <img src="image/caslogo.png" alt="CASAS Logo" class="logo-image">
+                    <span class="logo-text">CASAS</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="department.html">Programs</a></li>
+                <li><a href="casas_staff_page.html" class="active">Faculty</a></li>
+                <li><a href="gallery_html (1).html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="faculty-hero">
+        <div class="container">
+            <h1>Our Distinguished Faculty</h1>
+            <p>Meet the experts who shape the future of technology education</p>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">35+</span>
+                    <span class="stat-label">Faculty Members</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">25+</span>
+                    <span class="stat-label">Years Average Experience</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">75+</span>
+                    <span class="stat-label">Research Publications</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Industry Partnerships</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="staff-section">
+        <div class="container">
+            <h2 class="section-title">Leadership Team</h2>
+            <div class="leadership-grid">
+                <div class="staff-card leadership-card">
+                    <div class="staff-image">
+                        <img src="staff/principal.jpg" alt="Principal">
+                    </div>
+                    <h3 class="staff-name">Dr. B B Sagade</h3>
+                    <p class="staff-designation">Principal</p>
+                    <p class="staff-bio">Distinguished educator with over 30 years of experience in academic administration and computer science education. Leading CASAS towards excellence in technology education and research innovation.</p>
+                    <div class="staff-contact">
+                      
+                     
+                    </div>
+                </div>
+
+                <div class="staff-card leadership-card">
+                    <div class="staff-image">
+                        <img src="staff/hod.jpg" alt="HOD">
+                    </div>
+                    <h3 class="staff-name">Prof. A D Gangarde</h3>
+                    <p class="staff-designation">Head of Department</p>
+                    <p class="staff-bio">Visionary leader with expertise in computer applications and data science. Spearheading curriculum development and fostering industry-academia collaboration for student success.</p>
+                    <div class="staff-contact">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Faculty Section -->
+    <section class="staff-section">
+        <div class="container">
+            <h2 class="section-title">Faculty Members</h2>
+            <div class="professors-grid">
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/patilmam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Patil.P.U</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/danvemam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Danve.B.M</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/deepalimam.jpg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Jagdale.D.V</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/sheikhmam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Shaikh.A.M</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/pranitamam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Tathe.P.V</h3>
+                    <p class="staff-designation">Professor </p>
+                    
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/pallavimam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Zarekar.P.A</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/shaheenmam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Shaikh.S.A</h3>
+                    <p class="staff-designation">Professor </p>
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/artimam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Zade.A.V</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/shraddhamam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Chemate.S.B</h3>
+                    <p class="staff-designation">Professor</p>
+                   
+                    
+                </div>
+
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/panchalmam.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof.Panchal.S.R</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                    
+                </div>
+     <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/profprint.jpg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">Prof. Ekshinge.V.R</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                </div>
+                <div class="staff-card">
+                    <div class="staff-image">
+                        <img src="staff/vishalsir.jpeg" alt="Professor">
+                    </div>
+                    <h3 class="staff-name">prof.Kamble.V.S</h3>
+                    <p class="staff-designation">Professor</p>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CASAS Department</h4>
+                    <p>Centre for Advanced Studies in Applied Sciences</p>
+                    <p>New Arts, Commerce and Science College Ahilyanagar, Maharashtra </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="department.html">Programs</a></li>
+                        <li><a href="casas_staff_page.html">Faculty</a></li>
+                        <li><a href="gallery_html (1).html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Programs</h4>
+                    <ul>
+                        <li><a href="bca.html">Computer Application (BCA)</a></li>
+                        <li><a href="ds.html">Data Science / Cloud Computing</a></li>
+                        <li><a href="bcss.html">Computer Science</a></li>
+                        <li><a href="mca.html">MCA/MCS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> casas@newartscollege.ac.in</p>
+                    <p><i class="fas fa-phone"></i> +91 9422224440</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Ahilyanagar, Maharashtra</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; 2025 CASAS Department. All rights reserved. | Designed By <b> Vaishnavi Bhakare</b></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe staff cards
+        document.querySelectorAll('.staff-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

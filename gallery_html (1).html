@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CASAS Department Gallery - Explore our college events, facilities, achievements, and memorable moments captured through photos.">
+    <title>CASAS Department - Gallery</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            padding-top: 80px;
+            background: #f8fafc;
+        }
+
+        .gallery-hero {
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0" stop-color="rgba(255,255,255,.1)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs><circle fill="url(%23a)" cx="10" cy="10" r="10"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .gallery-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            padding: 0 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .gallery-container {
+            padding: 2rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .gallery-item.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .overlay {
+            transform: translateY(0);
+        }
+
+        .overlay h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .overlay p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: lightboxFadeIn 0.3s ease;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-info {
+            text-align: center;
+            color: white;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lightbox-info p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .close {
+            position: absolute;
+            top: -50px;
+            right: -20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            color: #ff6b6b;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+            pointer-events: none;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-nav button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+            backdrop-filter: blur(10px);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .lightbox-nav button:active {
+            transform: scale(0.95);
+        }
+
+        /* Loading Animation */
+        .gallery-item img {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+        }
+
+        .gallery-item img[src] {
+            background: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes lightboxFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .gallery-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-hero p {
+                font-size: 1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                padding: 0.5rem;
+            }
+
+            .gallery-item img {
+                height: 200px;
+            }
+
+            .filter-container {
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .lightbox-content {
+                max-width: 95%;
+                max-height: 95%;
+            }
+
+            .lightbox img {
+                max-height: 60vh;
+            }
+
+            .lightbox-nav {
+                padding: 0 1rem;
+            }
+
+            .lightbox-nav button {
+                font-size: 1.2rem;
+                padding: 0.8rem;
+                width: 50px;
+                height: 50px;
+            }
+
+            .close {
+                top: -40px;
+                right: -10px;
+                font-size: 1.5rem;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .gallery-item img {
+                height: 180px;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-btn {
+                width: 150px;
+            }
+
+            .gallery-hero {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+              <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <img src="image/caslogo.png" alt="CASAS Logo" class="logo-image">
+                    <span class="logo-text">CASAS</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="department.html">Programs</a></li>
+                <li><a href="casas_staff_page.html">Faculty</a></li>
+                <li><a href="gallery_html (1).html" class="active">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <div class="container">
+            <h1>CASAS Gallery</h1>
+            <p>Memories from our amazing college events and achievements</p>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Events</button>
+        <button class="filter-btn" data-filter="cultural">Cultural</button>
+        <button class="filter-btn" data-filter="academic">Academic</button>
+        <button class="filter-btn" data-filter="social">campus</button>
+    </div>
+
+    <!-- Gallery Section -->
+     <main>
+        <div class="gallery-container">
+            <div class="gallery-grid">
+                <!-- Cultural Events -->
+                 <div class="gallery-item" data-category="cultural">
+                    <img src="gallery/cultural7.jpeg" alt="Cultural Event" loading="lazy">
+                    <div class="overlay">
+                        <h3>Annual Cultural Festival</h3>
+                        <p>our vibrant cultural celebration</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="cultural">
+                    <img src="gallery/cultural3.jpeg" alt="Cultural Event" loading="lazy">
+                    <div class="overlay">
+                        <h3>Annual Cultural Festival</h3>
+                        <p>Students showcasing their talents in our vibrant cultural celebration</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="cultural">
+                    <img src="gallery/cultural.jpeg" alt="Music Concert" loading="lazy">
+                    <div class="overlay">
+                        <h3>teachers day</h3>
+                        <p>onors the dedication and guidance of educators through heartfelt celebrations, performances, and tributes by students</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="cultural">
+                    <img src="gallery/cultural1.jpeg" alt="Drama Performance" loading="lazy">
+                    <div class="overlay">
+                        <h3>bollywood day</h3>
+                        <p>fun-filled celebration where students express their love for cinema through iconic outfits, dance, and entertainment.</p>
+                    </div>
+                </div>
+
+                <!-- Sports Events -->
+                <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic1.jpeg" alt="Sports Event" loading="lazy">
+                    <div class="overlay">
+                        <h3>Workshops</h3>
+                        <p>equips students with hands-on skills in data visualization, business intelligence, and interactive dashboard creation</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic.jpeg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic7.jpeg" alt="Graduation Ceremony" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="cultural">
+                    <img src="gallery/cultural6.jpeg" alt="Science Fair" loading="lazy">
+                    <div class="overlay">
+                        <h3>traditional day</h3>
+                        <p>celebrates cultural heritage, where students showcase ethnic attire, customs, and vibrant performances</p>
+                    </div>
+                </div>
+                 <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic26.jpg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic20.jpg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic21.jpg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic22.jpg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic23.jpg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic24.jpg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="academic">
+                    <img src="gallery/academic25.jpg" alt="Basketball Tournament" loading="lazy">
+                    <div class="overlay">
+                        <h3>Academic</h3>
+                        <p>Celebrating academic achievements and new beginnings.</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="social">
+                    <img src="gallery/bcabuilding.JPG" alt="Fresher's Party" loading="lazy">
+                    <div class="overlay">
+                        <h3>BCA Building</h3>
+                        <p>advanced computer labs and the Matrix Hall for practical learning, seminars, and interactive sessions</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="social">
+                    <img src="gallery/bcaspace.JPG" alt="College Fest" loading="lazy">
+                    <div class="overlay">
+                        <h3>BCA Space</h3>
+                        <p> offers modern labs and the Matrix Hall for practical learning and academic activities</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="social">
+                    <img src="gallery/bcalab1.JPG" alt="Workshop" loading="lazy">
+                    <div class="overlay">
+                        <h3>BCA Lab</h3>
+                        <p>  equipped with modern systems and software to support practical learning and project development</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="social">
+                    <img src="gallery/matrixhall2.JPG" alt="Tech Conference" loading="lazy">
+                    <div class="overlay">
+                        <h3>Matrix Hall</h3>
+                        <p>for practical learning, seminars, and interactive sessions</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="social">
+                    <img src="gallery/dsclassroom.JPG" alt="Lab Session" loading="lazy">
+                    <div class="overlay">
+                        <h3>Digital classroom</h3>
+                        <p>provides smart learning with modern teaching tools, interactive content, and technology-enabled lectures.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="social">
+                    <img src="gallery/virtual2.JPG" alt="Art Exhibition" loading="lazy">
+                    <div class="overlay">
+                        <h3>Virtual classroom</h3>
+                        <p>enables online learning through live lectures, interactive sessions, and digital resources.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="social">
+                    <img src="gallery/dslab1.JPG" alt="Alumni Meet" loading="lazy">
+                    <div class="overlay">
+                        <h3>digital lab</h3>
+                        <p>The Digital Lab offers advanced systems and tools for practical training, research, and technology-driven learning</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="close">&times;</span>
+            <img id="lightbox-img" src="" alt="">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-description"></p>
+            </div>
+            <div class="lightbox-nav">
+                <button id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button id="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+       <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CASAS Department</h4>
+                    <p>Centre for Advanced Studies in Applied Science</p>
+                    <p>New Arts, Commerce and Science College Ahilyanagar, Maharashtra </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="department.html">Programs</a></li>
+                        <li><a href="casas_staff_page.html">Faculty</a></li>
+                        <li><a href="gallery_html (1).html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Programs</h4>
+                    <ul>
+                        <li><a href="bca.html">Computer Application (BCA)</a></li>
+                        <li><a href="ds.html">Data Science / Cloud Computing</a></li>
+                        <li><a href="bcss.html">Computer Science</a></li>
+                        <li><a href="mca.html">MCA/MCS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> casas@newartscollege.ac.in</p>
+                    <p><i class="fas fa-phone"></i> +91 9422224440</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Ahilyanagar, Maharashtra</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; 2025 CASAS Department. All rights reserved. | Designed By <b> Vaishnavi Bhakare</b></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Gallery functionality
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxDescription = document.getElementById('lightbox-description');
+        const closeBtn = document.querySelector('.close');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        let currentImageIndex = 0;
+        let visibleImages = Array.from(galleryItems);
+
+        // Filter functionality
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+                
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Filter images
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        item.classList.add('fade-in');
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('fade-in');
+                    }
+                });
+
+                // Update visible images array for lightbox navigation
+                visibleImages = Array.from(galleryItems).filter(item => 
+                    filter === 'all' || item.dataset.category === filter
+                );
+            });
+        });
+
+        // Lightbox functionality
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const title = item.querySelector('h3').textContent;
+                const description = item.querySelector('p').textContent;
+
+                lightboxImg.src = img.src.replace('w=400&h=300', 'w=800&h=600');
+                lightboxTitle.textContent = title;
+                lightboxDescription.textContent = description;
+                
+                currentImageIndex = visibleImages.indexOf(item);
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close lightbox
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Navigation
+        prevBtn.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + visibleImages.length) % visibleImages.length;
+            updateLightboxImage();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % visibleImages.length;
+            updateLightboxImage();
+        });
+
+        function updateLightboxImage() {
+            const currentItem = visibleImages[currentImageIndex];
+            const img = currentItem.querySelector('img');
+            const title = currentItem.querySelector('h3').textContent;
+            const description = currentItem.querySelector('p').textContent;
+
+            lightboxImg.src = img.src.replace('w=400&h=300', 'w=800&h=600');
+            lightboxTitle.textContent = title;
+            lightboxDescription.textContent = description;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                }
+            }
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Lazy loading animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        galleryItems.forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>

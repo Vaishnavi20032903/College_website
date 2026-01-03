@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bachelor of Computer Applications (BCA) at CASAS Department - Comprehensive program in software development, databases, and mobile applications.">
+    <title>Computer Application (BCA) - CASAS Department</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+     <style>
+        body {
+            padding-top: 80px;
+        }
+
+        /* .program-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        } */
+              .program-hero{
+            background:  linear-gradient(rgba(76, 68, 68, 0.5), rgba(0, 0, 0, 0.5)), /* Black overlay */
+        url('image/c.jpg.jpeg');
+         background-size: cover;
+    background-position: center;
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+
+
+        .program-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .program-hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .program-hero .description {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .sidebar {
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-item:first-child {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+            color: #667eea;
+            padding-left: 2rem;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            color: white;
+            position: relative;
+        }
+
+        .sidebar-item.active::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .main-content {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-height: 600px;
+            transition: all 0.3s ease;
+        }
+
+        .content-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a5568;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .image-card {
+            position: relative;
+            background: #f7fafc;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: zoomOut 0.8s ease forwards, floatEffect 4s ease-in-out infinite;
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .popup {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            text-align: center;
+            font-weight: 600;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover .popup {
+            transform: translateY(0);
+        }
+
+        .breadcrumb {
+            padding: 1rem 2rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #718096;
+            margin: 0 0.5rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes zoomOut {
+            from {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes floatEffect {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .sidebar {
+                min-width: auto;
+                position: static;
+            }
+
+            .main-content {
+                padding: 2rem;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .program-hero h1 {
+                font-size: 2rem;
+            }
+
+            .breadcrumb {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+              <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <img src="image/caslogo.png" alt="CASAS Logo" class="logo-image">
+                    <span class="logo-text">CASAS</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="department.html">Programs</a></li>
+                <li><a href="casas_staff_page.html">Faculty</a></li>
+                <li><a href="gallery_html (1).html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <!-- <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="department.html">Programs</a>
+        </div>
+    </div> -->
+
+    <!-- Hero Section -->
+    <section class="program-hero">
+        <div class="container">
+            <h1>Computer Application (BCA)</h1>
+            <p class="subtitle">Welcome To</p>
+            <p class="description">CASAS (Centre for Advanced Studies in Applied Sciences)</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <div class="content-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+                <li class="sidebar-item active" onclick="showContent('about', this)"><i class="fas fa-info-circle"></i> About Department</li>
+                <li class="sidebar-item" onclick="showContent('board', this)"><i class="fas fa-chalkboard-teacher"></i> Board of Studies</li>
+                <li class="sidebar-item" onclick="showContent('infra', this)"><i class="fas fa-building"></i> Physical Infrastructure</li>
+                <li class="sidebar-item" onclick="showContent('research', this)"><i class="fas fa-microscope"></i> Research & Collaboration</li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div id="content-display">
+                <div class="content-text">
+                    <h2 style="color: #2d3748; margin-bottom: 1.5rem; font-size: 1.8rem;">About Computer Application Department</h2>
+                    <p>The BCA course is a full-time three years (six semesters) Bachelor's Degree in Computer Application. The degree helps interested students in setting up a sound academic base for an advanced career in Computer Applications.</p>
+                    <p>The Computer Application course blends computer fundamentals with application development, focusing on software design, databases, web technologies, and mobile app development. Students receive practical exposure to industry-relevant programming languages and frameworks, enabling them to become skilled application developers and IT professionals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CASAS Department</h4>
+                    <p>Centre for Advanced Studies in Applied Science</p>
+                    <p>New Arts, Commerce and Science College Ahilyanagar, Maharashtra </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="department.html">Programs</a></li>
+                        <li><a href="casas_staff_page.html">Faculty</a></li>
+                        <li><a href="gallery_html (1).html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Programs</h4>
+                    <ul>
+                        <li><a href="bca.html">Computer Application (BCA)</a></li>
+                        <li><a href="ds.html">Data Science / Cloud Computing</a></li>
+                        <li><a href="bcss.html">Computer Science</a></li>
+                        <li><a href="mca.html">MCA/MCS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> casas@newartscollege.ac.in</p>
+                    <p><i class="fas fa-phone"></i> +91 9422224440</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Ahilyanagar, Maharashtra</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; 2025 CASAS Department. All rights reserved. | Designed By <b>Vaishnavi Bhakare</b></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showContent(section, element) {
+            const contents = {
+                about: `<div class="content-text"><h2 style="color: #2d3748; margin-bottom: 1.5rem; font-size: 1.8rem;">About Computer Application Department</h2><p>The Bachelor of Computer Applications (BCA) program at New Arts, Commerce and Science College, under the Department of CASAS, was established in 2017. It provides a strong foundation in computer science, programming, web technologies, and application development. The department focuses on skill development, innovation, and preparing students for IT careers. In addition to academics, students are encouraged to participate in coding contests, project exhibitions, and industry-driven workshops. The department strives to nurture creativity and logical thinking, enabling students to become successful professionals in the digital era.</p></div>`,
+                board: `<div class="content-text"><h2 style="color: #2d3748; margin-bottom: 1.5rem; font-size: 1.8rem;">Board of Studies</h2><p>The Board of Studies designs the curriculum to meet the evolving needs of the IT industry. It regularly updates subjects like Programming, Database Systems, Web Development, and Emerging Technologies. Academic experts and industry professionals contribute to the development of the syllabus. The board emphasizes practical-oriented learning with a balanced approach to theory. Through regular reviews, it ensures that the BCA program remains dynamic and future-ready, producing graduates capable of adapting to technological changes.</p></div>`,
+                infra: `<div class="content-text"><h2 style="color: #2d3748; margin-bottom: 1.5rem; font-size: 1.8rem;">Physical Infrastructure</h2><p>The department includes computer labs with modern PCs, internet access, and projectors for software demonstrations and presentations.</p></div><div class="image-grid"><div class="image-card"><img src="image/bcaspace.jpg" alt="BCA Building Overview"><div class="popup"><strong>Building Overview</strong></div></div><div class="image-card"><img src="image/bcalab1.jpg" alt="Computer Lab"><div class="popup"><strong>Computer Lab 1</strong></div></div><div class="image-card"><img src="image/bcalab2.jpg" alt="Lab 2"><div class="popup"><strong>Computer Lab 2</strong></div></div><div class="image-card"><img src="image/bcalab3.jpg" alt="Lab 3"><div class="popup"><strong>Programming Lab</strong></div></div><div class="image-card"><img src="image/matrixhall2.jpg" alt="Smart Classroom"><div class="popup"><strong>Smart Classroom</strong></div></div><div class="image-card"><img src="image/matrixhall1.jpg" alt="Project Hall"><div class="popup"><strong>Project Hall</strong></div></div></div>`,
+                research: `<div class="content-text"><h2 style="color: #2d3748; margin-bottom: 1.5rem; font-size: 1.8rem;">Research & Collaboration</h2><p>The department encourages research in software development, data analytics, and IT applications. It collaborates with IT industries, training institutes, and organizes workshops, hackathons, and seminars to enhance student exposure and employability. Faculty members guide students in developing innovative mini-projects and research papers. The department also seeks collaborations with national and international organizations for internships and advanced training. This ensures students gain not only academic knowledge but also hands-on professional experience.</p></div>`
+            };
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            const contentDisplay = document.getElementById('content-display');
+            contentDisplay.style.opacity = '0';
+            contentDisplay.style.transform = 'translateX(20px)';
+            setTimeout(() => {contentDisplay.innerHTML = contents[section];contentDisplay.style.opacity = '1';contentDisplay.style.transform = 'translateX(0)';}, 200);
+        }
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        hamburger.addEventListener('click', () => {hamburger.classList.toggle('active');navMenu.classList.toggle('active');});
+        document.querySelectorAll('.nav-menu a').forEach(link => {link.addEventListener('click', () => {hamburger.classList.remove('active');navMenu.classList.remove('active');});});
+        window.addEventListener('scroll', () => {const navbar = document.querySelector('.navbar');if (window.scrollY > 100) {navbar.classList.add('scrolled');} else {navbar.classList.remove('scrolled');}});
+        window.addEventListener('load', () => {const firstItem = document.querySelector('.sidebar-item');if (firstItem) {showContent('about', firstItem);}});
+    </script>
+</body>
+</html>

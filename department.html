@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CASAS Department Programs - Explore our comprehensive range of undergraduate and postgraduate programs in Computer Science, Data Science, Cloud Computing, and more.">
+    <title>CASAS Department - Programs</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            padding-top: 80px;
+        }
+
+        .programs-hero {
+             background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .program-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #667eea;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .degree-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .degree-badge.master {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .card-description {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: scale(1.05);
+        }
+
+        .cta-section {
+             background: linear-gradient(135deg, #1383ec 0%, #cb1313b9 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn.primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .cta-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .programs-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .filter-tabs {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .card-content {
+                padding: 1.5rem;
+            }
+
+            .cta-content h3 {
+                font-size: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+             <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <img src="image/caslogo.png" alt="CASAS Logo" class="logo-image">
+                    <span class="logo-text">CASAS</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="department.html" class="active">Programs</a></li>
+                <li><a href="casas_staff_page.html">Faculty</a></li>
+                <li><a href="gallery_html (1).html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="programs-hero">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Our Programs</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Empowering Futures Through Cutting-Edge Education</p>
+            <div style="display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700;">7</div>
+                    <div style="opacity: 0.8;">Programs</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700;">12,912+</div>
+                    <div style="opacity: 0.8;">Students</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700;">35+</div>
+                    <div style="opacity: 0.8;">Faculty</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="section">
+        <div class="container">
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">All Programs</button>
+                <button class="filter-btn" data-filter="undergraduate">Undergraduate</button>
+                <button class="filter-btn" data-filter="postgraduate">Postgraduate</button>
+            </div>
+
+            <!-- Programs Grid -->
+            <div class="programs-grid">
+                <!-- Undergraduate Programs -->
+                <div class="program-card undergraduate" data-category="undergraduate">
+                    <div class="card-image">
+                        <img src="image/bca.jpg" alt="Computer Application">
+                        <div class="card-overlay">
+                            <span class="duration">3 Years</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Computer Application</h3>
+                            <span class="degree-badge">BCA</span>
+                        </div>
+                        <p class="card-description">This course blends computer fundamentals with app development, focusing on software design, databases, web and mobile apps.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Software Design</span>
+                            <span class="feature-tag">Database</span>
+                            <span class="feature-tag">Mobile Apps</span>
+                            <span class="feature-tag">Web Development</span>
+
+                        </div>
+                        <div class="card-footer">
+                            <a href="bca.html" class="btn-primary">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="btn-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card undergraduate" data-category="undergraduate">
+                    <div class="card-image">
+                        <img src="image/bcss.jpg" alt="Computer Science">
+                        <div class="card-overlay">
+                            <span class="duration">3 Years</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Computer Science</h3>
+                            <span class="degree-badge">BCS</span>
+                        </div>
+                        <p class="card-description">Strong foundation in algorithms, programming, OS, AI & blockchain. Real-time project experience & problem-solving focus.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">AI & ML</span>
+                            <span class="feature-tag">Blockchain</span>
+                            <span class="feature-tag">Algorithms</span>
+                            <span class="feature-tag">Database</span>
+                        </div>
+                        <div class="card-footer">
+                            <a href="bcss.html" class="btn-primary">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="btn-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card undergraduate" data-category="undergraduate">
+                    <div class="card-image">
+                        <img src="image/ds.jpg" alt="Data Science">
+                        <div class="card-overlay">
+                            <span class="duration">3 Years</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Data Science</h3>
+                            <span class="degree-badge">BDS</span>
+                        </div>
+                        <p class="card-description">Advanced skills in ML, big data, visualization & modeling. Hands-on with Python, R, MongoDB for industry-ready roles.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Python</span>
+                            <span class="feature-tag">Big Data</span>
+                            <span class="feature-tag"> NLP</span>
+                            <span class="feature-tag"> AI</span>
+                            <span class="feature-tag">ML</span>
+                        </div>
+                        <div class="card-footer">
+                            <a href="ds.html" class="btn-primary">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="btn-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card undergraduate" data-category="undergraduate">
+                    <div class="card-image">
+                        <img src="image/cl.jpeg" alt="Cloud Computing">
+                        <div class="card-overlay">
+                            <span class="duration">3 Years</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Cloud Computing</h3>
+                            <span class="degree-badge">BCC</span>
+                        </div>
+                        <p class="card-description">Explore AWS, Azure, GCP, DevOps & security. Practical cloud lab work for careers as cloud engineers & architects.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">AWS</span>
+                            <span class="feature-tag">DevOps</span>
+                            <span class="feature-tag">Security</span>
+                             <span class="feature-tag">Cloud Architecture & Design</span>
+                        </div>
+                        <div class="card-footer">
+                            <a href="cl.html" class="btn-primary">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="btn-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card undergraduate" data-category="undergraduate">
+                    <div class="card-image">
+                        <img src="image/print.jpg" alt="Printing Technology">
+                        <div class="card-overlay">
+                            <span class="duration">3 Years</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Printing Technology</h3>
+                            <span class="degree-badge">BPT</span>
+                        </div>
+                        <p class="card-description">Learn digital/3D printing, packaging design, color systems, and hands-on industrial tools for publishing/media jobs.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">3D Printing</span>
+                            <span class="feature-tag">Design</span>
+                            <span class="feature-tag">Media</span>
+                            <span class="feature-tag">Print Media Technology</span>
+                        </div>
+                        <div class="card-footer">
+                            <a href="print.html" class="btn-primary">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="btn-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Postgraduate Programs -->
+                <div class="program-card postgraduate" data-category="postgraduate">
+                    <div class="card-image">
+                        <img src="image/MCA.jpg" alt="Master of Computer Applications">
+                        <div class="card-overlay">
+                            <span class="duration">2 Years</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Master of Computer Applications</h3>
+                            <span class="degree-badge master">MCA</span>
+                        </div>
+                        <p class="card-description">Advanced learning in full-stack development, cloud computing, and system architecture.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Full-Stack</span>
+                            <span class="feature-tag">AI</span> <span class="feature-tag">Operating Systems</span><span class="feature-tag">Software Engineering</span>
+
+                        </div>
+                        <div class="card-footer">
+                            <a href="mca.html" class="btn-primary">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="btn-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-card postgraduate" data-category="postgraduate">
+                    <div class="card-image">
+                        <img src="image/mcs.jpg" alt="Master of Computer Science">
+                        <div class="card-overlay">
+                            <span class="duration">2 Years</span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-title">Master of Computer Science</h3>
+                            <span class="degree-badge master">MCS</span>
+                        </div>
+                        <p class="card-description">Emphasizes algorithmic design, data structures, software architecture, and AI-driven problem-solving with research focus.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Research</span>
+                            <span class="feature-tag">Networks</span>
+                            <span class="feature-tag">Architecture</span>
+                            <span class="feature-tag">Architecture</span>
+                        </div>
+                        <div class="card-footer">
+                            <a href="mcs.html" class="btn-primary">
+                                <span>Learn More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="btn-secondary">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h3>Ready to Start Your Journey?</h3>
+                    <p>Join thousands of students who have transformed their careers with our programs</p>
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="cta-btn primary">Apply Now</a>
+                        <a href="CasasB.pdf" class="cta-btn secondary">Download Brochure</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CASAS Department</h4>
+                    <p>Centre for Advanced Studies in Applied Science</p>
+                    <p>New Arts, Commerce and Science College Ahilyanagar, Maharashtra </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="department.html">Programs</a></li>
+                        <li><a href="casas_staff_page.html">Faculty</a></li>
+                        <li><a href="gallery_html (1).html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Programs</h4>
+                    <ul>
+                        <li><a href="bca.html">Computer Application (BCA)</a></li>
+                        <li><a href="ds.html">Data Science / Cloud Computing</a></li>
+                        <li><a href="bcss.html">Computer Science</a></li>
+                        <li><a href="mca.html">MCA/MCS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> casas@newartscollege.ac.in</p>
+                    <p><i class="fas fa-phone"></i> +91 9422224440</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Ahilyanagar, Maharashtra</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; 2025 CASAS Department. All rights reserved. | Designed By <b>Vaishnavi Bhakare</b></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const programCards = document.querySelectorAll('.program-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+                
+                programCards.forEach(card => {
+                    if (filter === 'all' || card.classList.contains(filter)) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.6s ease forwards';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe program cards
+        programCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Bookmark functionality
+        document.querySelectorAll('.btn-secondary').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                btn.classList.toggle('bookmarked');
+                btn.style.color = btn.classList.contains('bookmarked') ? '#ff6b6b' : '#667eea';
+            });
+        });
+    </script>
+</body>
+</html>
